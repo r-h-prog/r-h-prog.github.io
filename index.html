@@ -5,46 +5,17 @@
 <head>
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
-  <script src="https://rawgit.com/gasolin/aframe-href-component/master/dist/aframe-href-component.min.js"></script>
 </head>
 <body style='margin: 0; overflow: hidden;'>
 
   <a-scene embedded arjs="debugUIEnabled:false;">
-    <a-marker type='pattern' url='./marker/pattern-profile.patt'>
+    <a-marker type='pattern' url='./marker/pattern-leaves-4393918_640.patt'>
       <a-entity
-        link="href: https://dais-official-site.web.app/; title: Official Site;"
+        link="href: https://www.touseisha.co.jp; title: Official Site;"
         position="0 .5 0"
       ></a-entity>
     </a-marker>
-
-    <a-marker type='pattern' url='./marker/pattern-tw.patt'>
-      <a-entity
-        link="href: https://twitter.com/dai_designing; title: Twitter;"
-        position="0 .5 0"
-      ></a-entity>
-    </a-marker>
-
-    <a-marker type='pattern' url='./marker/pattern-fb.patt'>
-      <a-entity
-        link="href: https://www.facebook.com/daisuke.mori.374; title: Facebook;"
-        position="0 .5 0"
-      ></a-entity>
-    </a-marker>
-
-    <a-marker type='pattern' url='./marker/pattern-qiita.patt'>
-      <a-entity
-        link="href: https://qiita.com/dai_designing; title: Qiita;"
-        position="0 .5 0"
-      ></a-entity>
-    </a-marker>
-
-    <a-marker type='pattern' url='./marker/pattern-git.patt'>
-      <a-entity
-        link="href: https://github.com/dai-570415; title: Git Hub;"
-        position="0 .5 0"
-      ></a-entity>
-    </a-marker>
-
+    
     <a-entity camera look-controls wasd-controls>
       <a-entity cursor="fuse: true;"
         position="0 0 -1"
