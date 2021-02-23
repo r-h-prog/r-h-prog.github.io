@@ -9,119 +9,38 @@
      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
      <!-- AR.jsライブラリ読み込み -->
      <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-     <!-- shaderライブラリ読み込み -->
-     <script src="./0223.js"></script>
-     <script src="./shader-grid-glitch.js"></script>
- 
 </head>
 <body>
-   
-    <!-- AFrameにAR.js紐付け -->
-    <a-scene embedded arjs="debugUIEnabled:false;">
+   <a-scene id="scene" embedded arjs="debugUIEnabled:false;">
+       <a-asset-item id="parkingObj" src="./obj/parking/Parking.obj"></a-asset-item>
+       <a-asset-item id="parkingMtl" src="./obj/parking/Parking.mtl"></a-asset-item>
+       <a-marker preset="hiro" id="island" registerevents></a-marker>
+       <a-entity camera></a-entity>
+   </a-scene>
+   <script>
+       AFRAME.registerComponent('registerevents',{
+           init: function(){
+               var marker = this.el;
+               // 以下、マーカーを検出時のイベント
+               marker.addEventListner('markerFound', function(){
+                   var markerId = island.id;
+                   // a-obj-model要素を生成する
+                   let parkingIns = document.createElement("a-obj-model");
+                   parkingIns.id = "parkingIns";
+                   let scene = document.getElementById("scene");
+                   // a-obj-modelをa-sceneに追加する
+                   scene.appendChild(parkingIns);
+                   // objふぁいるとmtlファイルをa-obj-model要素に追加する
+                   parkingIns.setAttribute("src", "#parkingObj");
+                   parkingIns.setAttribute("src", "#parkingMtl");
+                   // position, scale, positionの設定
+                   parkingIns.setAttribute("position", "0 0 -0.07");
+                    parkingIns.setAttribute("scale", "0.01 0.01 0.01");
+                    parkingIns.setAttribute("rotation", "0 270 -20");
 
-        <!-- カーソルを追加 -->
-        <a-camera>
-            <a-cursor fuse="true" color="white" scale="2 2">
-                <a-animation 
-                     begin="mouseenter" 
-                     easing="ease-out" 
-                     attribute="scale" 
-                     fill="forwards" 
-                     from="2 2 2" 
-                     to="1 1 1" 
-                     dur="300">
-                </a-animation>
-                <a-animation 
-                     begin="mouseenter"
-                     attribute="color" 
-                     fill="forwards" 
-                     from="white" 
-                     to="red" 
-                     dur="0">
-                </a-animation>
-                <a-animation 
-                     begin="mouseleave" 
-                     easing="ease-in" 
-                     attribute="scale" 
-                     fill="forwards" 
-                     from="1 1 1" 
-                     to="2 2 2" 
-                     dur="300">
-                </a-animation>
-                <a-animation 
-                     begin="mouseleave" 
-                     attribute="color" 
-                     fill="forwards" 
-                     from="red" 
-                     to="black" 
-                     dur="0">
-                </a-animation>
-            </a-cursor>
-    </a-camera>
-
-
-    <!-- 3Dモデル  -->
-<a-asset-item id="3DModel" src="./Astronaut.obj"></a-asset-item>
-<!-- マテリアル -->
-<a-asset-item id="Material" src="./Astronaut.mtl"></a-asset-item> 
-
-<a-marker type="pattern" url='./marker/pattern-leaves-4393918_640.patt'>
-    <a-entity>
-        <a-obj-model 
-            src="#3DModel"
-            mtl="#Material"
-            scale="0.5 0.5 0.5"
-            position="0 0.5 0"
-            rotation="-80 -90 90">
-        </a-obj-model>
-        <a-animation  
-            attribute="position"
-            dur="3000"
-            to="0 0 0.5"
-            repeat="indefinite"
-            direction="alternate">
-        </a-animation>
-    </a-entity>
-
-    <a-text 
-        position="-1.0 1.0 -2" 
-        value="Hi, I'm Name!"
-        width="5"
-        color="#fcc203"
-        rotation="0 0 0">
-    </a-text>
-
-
-    <a-entity 
-        geometry="primitive:plane;" 
-        material="shader:gif; src:#Palbum; 
-        opacity:.9"
-        scale="1.2 0.8 1.5"
-        position="-1.2 0.5 -0.5"
-        rotation="270 180 180">
-    </a-entity>
-
-    <a-sphere 
-        material="shader:grid-glitch; color:yellow;"
-        radius="0.3"
-        position="-1.2 1.5 -1.2"
-        rotation="0 0 0">
-    </a-sphere>
-</a-marker>
-<a-entity camera look-controls wasd-controls>
-    <a-entity cursor="fuse: true;"
-      position="0 0 -1"
-      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-      material="color: blue; shader: flat">
-      <a-animation begin="click" easing="ease-in" attribute="scale" dur="150"
-          fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
-      <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" dur="1500"
-          fill="backwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
-    </a-entity>
-  </a-entity>
-
-
-
-    </a-scene>
+               })
+           }
+       })
+   </script>
 </body>
 </html>
