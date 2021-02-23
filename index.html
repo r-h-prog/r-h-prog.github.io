@@ -1,35 +1,126 @@
-
-
-
 <!DOCTYPE html>
+<html lang="en">
 <head>
-  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-<body style='margin: 0; overflow: hidden;'>
+<body>
+    <!-- AFrameライブラリ読み込み -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <!-- AR.jsライブラリ読み込み -->
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+    <!-- shaderライブラリ読み込み -->
+    <script src="0223.js"></script>
+    <script src="shader-grid-glitch.js"></script>
 
-  <a-scene embedded arjs="debugUIEnabled:false;">
-    <a-marker type='pattern' url='./marker/pattern-leaves-4393918_640.patt'>
-      <a-entity
-        link="href: https://www.touseisha.co.jp; title: Official Site;"
-        position="0 .5 0"
-      ></a-entity>
-    </a-marker>
-    
-    <a-entity camera look-controls wasd-controls>
-      <a-entity cursor="fuse: true;"
-        position="0 0 -1"
-        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-        material="color: blue; shader: flat">
-        <a-animation begin="click" easing="ease-in" attribute="scale" dur="150"
-            fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
-        <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" dur="1500"
-            fill="backwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
-      </a-entity>
+    <!-- AFrameにAR.js紐付け -->
+    <a-scene embedded arjs="debugUIEnabled:false;">
+
+        <!-- カーソルを追加 -->
+        <a-camera>
+            <a-cursor fuse="true" color="white" scale="2 2">
+                <a-animation 
+                     begin="mouseenter" 
+                     easing="ease-out" 
+                     attribute="scale" 
+                     fill="forwards" 
+                     from="2 2 2" 
+                     to="1 1 1" 
+                     dur="300">
+                </a-animation>
+                <a-animation 
+                     begin="mouseenter"
+                     attribute="color" 
+                     fill="forwards" 
+                     from="white" 
+                     to="red" 
+                     dur="0">
+                </a-animation>
+                <a-animation 
+                     begin="mouseleave" 
+                     easing="ease-in" 
+                     attribute="scale" 
+                     fill="forwards" 
+                     from="1 1 1" 
+                     to="2 2 2" 
+                     dur="300">
+                </a-animation>
+                <a-animation 
+                     begin="mouseleave" 
+                     attribute="color" 
+                     fill="forwards" 
+                     from="red" 
+                     to="black" 
+                     dur="0">
+                </a-animation>
+            </a-cursor>
+    </a-camera>
+
+
+    <!-- 3Dモデル  -->
+<a-asset-item id="3DModel" src="Astronaut.obj"></a-asset-item>
+<!-- マテリアル -->
+<a-asset-item id="Material" src="Astronaut.mtl"></a-asset-item> 
+
+<a-marker type="pattern" url='./marker/pattern-leaves-4393918_640.patt'>
+    <a-entity>
+        <a-obj-model 
+            src="#3DModel"
+            mtl="#Material"
+            scale="0.5 0.5 0.5"
+            position="0 0.5 0"
+            rotation="-80 -90 90">
+        </a-obj-model>
+        <a-animation  
+            attribute="position"
+            dur="3000"
+            to="0 0 0.5"
+            repeat="indefinite"
+            direction="alternate">
+        </a-animation>
     </a-entity>
 
-    <p>更新2020.10.7 18:20</p>
-  </a-scene>
+    <a-text 
+        position="-1.0 1.0 -2" 
+        value="Hi, I'm Name!"
+        width="5"
+        color="#fcc203"
+        rotation="0 0 0">
+    </a-text>
 
+
+    <a-entity 
+        geometry="primitive:plane;" 
+        material="shader:gif; src:#Palbum; 
+        opacity:.9"
+        scale="1.2 0.8 1.5"
+        position="-1.2 0.5 -0.5"
+        rotation="270 180 180">
+    </a-entity>
+
+    <a-sphere 
+        material="shader:grid-glitch; color:yellow;"
+        radius="0.3"
+        position="-1.2 1.5 -1.2"
+        rotation="0 0 0">
+    </a-sphere>
+</a-marker>
+<a-entity camera look-controls wasd-controls>
+    <a-entity cursor="fuse: true;"
+      position="0 0 -1"
+      geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+      material="color: blue; shader: flat">
+      <a-animation begin="click" easing="ease-in" attribute="scale" dur="150"
+          fill="forwards" from="0.1 0.1 0.1" to="1 1 1"></a-animation>
+      <a-animation begin="cursor-fusing" easing="ease-in" attribute="scale" dur="1500"
+          fill="backwards" from="1 1 1" to="0.1 0.1 0.1"></a-animation>
+    </a-entity>
+  </a-entity>
+
+
+
+    </a-scene>
 </body>
 </html>
